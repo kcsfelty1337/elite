@@ -23,27 +23,31 @@
    camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 ); 
    renderer = new THREE.WebGLRenderer(); 
    controls = new THREE.OrbitControls( camera, renderer.domElement );
-   camera.position.z = 500; 
+   camera.position.z = 100; 
 
 
    renderer.setSize( window.innerWidth, window.innerHeight ); 
    document.body.appendChild( renderer.domElement );
-   var systemSprite = THREE.ImageUtils.loadTexture( "systemSprite.png" );
+   //var systemSprite = THREE.ImageUtils.loadTexture( "systemSprite.png" );
    var stationArray = {};
-   var oldestUpdate = 168;
+   //var axes = buildAxes( 1000 );
+   //scene.add(axes);
+   var oldestUpdate = 730;
    $.getJSON('systems.json', function(data){
     var now = Math.floor(Date.now() / 1000);
     for (var i = 0; i < data.length; i++) {
-     //add if for barring old updates
      var item = data[i];     
-     var c = new THREE.Color((now - item.updated_at)/oldestUpdate*3600, 0, 1-((now - item.updated_at)/oldestUpdate*3600) );
-     var material = new THREE.SpriteMaterial( { map : systemSprite , color: c } ); //later, set color to r -> b based on how recent update was
-     var newMesh = new THREE.Sprite( material );
-     newMesh.position.x = item.x;
-     newMesh.position.y = item.y;
-     newMesh.position.z = item.z;
-     stationArray[item.id] = newMesh;
-     scene.add( newMesh );
+     if (((now - item.updated_at)/3600) < oldestUpdate){
+       var c = new THREE.Color(1-(now - item.updated_at)/(oldestUpdate*3600), 0, ((now - item.updated_at)/(oldestUpdate*3600)) );
+       //var material = new THREE.SpriteMaterial( { map : systemSprite , color: c } ); //later, set color to r -> b based on how recent update was
+       var material = new THREE.SpriteMaterial( { color: c } ); //later, set color to r -> b based on how recent update was
+       var newMesh = new THREE.Sprite( material );
+       newMesh.position.x = item.x/50;
+       newMesh.position.y = item.y/50;
+       newMesh.position.z = item.z/50;
+       stationArray[item.id] = newMesh;
+       scene.add( newMesh );
+      }
     } 
     render(); 
    });
