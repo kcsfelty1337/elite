@@ -33,6 +33,7 @@
    //var axes = buildAxes( 1000 );
    //scene.add(axes);
    var oldestUpdate = 730;
+   var universeScale = 25;
    $.getJSON('systems.json', function(data){
     var now = Math.floor(Date.now() / 1000);
     for (var i = 0; i < data.length; i++) {
@@ -42,13 +43,14 @@
        //var material = new THREE.SpriteMaterial( { map : systemSprite , color: c } ); //later, set color to r -> b based on how recent update was
        var material = new THREE.SpriteMaterial( { color: c } ); //later, set color to r -> b based on how recent update was
        var newMesh = new THREE.Sprite( material );
-       newMesh.position.x = item.x/50;
-       newMesh.position.y = item.y/50;
-       newMesh.position.z = item.z/50;
+       newMesh.position.x = item.x/universeScale;
+       newMesh.position.y = item.y/universeScale;
+       newMesh.position.z = item.z/universeScale;
        stationArray[item.id] = newMesh;
        scene.add( newMesh );
-      }
-    } 
+      } // if
+    } // for
+    var size = 50; var step = 100/universeScale; var gridHelper = new THREE.GridHelper( size, step ); scene.add( gridHelper );
     render(); 
    });
   });
