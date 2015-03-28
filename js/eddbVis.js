@@ -18,7 +18,7 @@
 
    renderer.setSize( window.innerWidth, window.innerHeight ); 
    document.body.appendChild( renderer.domElement );
-   var systemSprite = THREE.ImageUtils.loadTexture( "systemSprite.png" );
+   var systemSprite = THREE.ImageUtils.loadTexture( "systemsprite.png" );
    var stationArray = {};
    //var axes = buildAxes( 1000 );
    //scene.add(axes);
