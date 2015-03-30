@@ -1,4 +1,5 @@
   var scene, camera, renderer, stationArray;
+  window.scrollTo(0,1);
 
   function render() { 
    requestAnimationFrame( render ); 
@@ -20,8 +21,6 @@
    document.body.appendChild( renderer.domElement );
    var systemSprite = THREE.ImageUtils.loadTexture( "systemsprite.png" );
    var stationArray = {};
-   //var axes = buildAxes( 1000 );
-   //scene.add(axes);
    var oldestUpdate = 1460;
    var universeScale = 50;
    camera.position.z = universeScale; 
@@ -40,7 +39,10 @@
        scene.add( newMesh );
       } // if
     } // for
-    var size = 50; var step = 100/universeScale; var gridHelper = new THREE.GridHelper( size, step ); scene.add( gridHelper );
+    var size = 50; 
+    var step = 100/universeScale; 
+    var gridHelper = new THREE.GridHelper( size, step ); 
+    scene.add( gridHelper );
     render(); 
    });
   });
